@@ -1,0 +1,51 @@
+﻿@model IEnumerable<We_code.Models.Employe>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1 style="color: #153462; ">Employes</h1>
+<div style="background-color:ghostwhite">
+    <table class="table">
+        <tr>
+            <th style="color: #47B5FF; ">Image Profile</th>
+            <th style="color: #47B5FF; ">
+                Nom
+            </th>
+            <th style="color: #47B5FF; ">
+                Prenom
+            </th>
+            <th style="color: #47B5FF; ">
+                Date Anniversaire
+            </th>
+            <th style="color: #47B5FF; ">Modification</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="~/logo/img_avatar1.png" alt="Logo" style="width:40px;" class="rounded-pill">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateBirth)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.EmployeID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.EmployeID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.EmployeID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<button class="btn btn-default">
+    @Html.ActionLink("Nauveau Employe", "Create")
+</button>

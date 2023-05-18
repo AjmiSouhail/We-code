@@ -1,0 +1,40 @@
+﻿@model IEnumerable<We_code.Models.Formation>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1 style="color: #153462; ">Les languages de Formation</h1>
+<table class="table" style="background-color:ghostwhite">
+    <tr>
+        <th>
+        </th>
+        <th style="color: #47B5FF; ">
+            Nom Formation
+        </th>
+        <th style="color: #47B5FF; ">
+            Description Formation
+        </th>
+        <th style="color: #47B5FF; ">Modification</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td><img src="~/logo/web.png" style="width:40px;" /></td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.NomFormation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescriptionFormation)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.FormationID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.FormationID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.FormationID })
+            </td>
+        </tr>
+    }
+
+</table>

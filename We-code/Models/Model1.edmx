@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="data1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employe">
+          <Key>
+            <PropertyRef Name="EmployeID" />
+          </Key>
+          <Property Name="EmployeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateBirth" Type="date" />
+        </EntityType>
+        <EntityType Name="Formation">
+          <Key>
+            <PropertyRef Name="FormationID" />
+          </Key>
+          <Property Name="FormationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomFormation" Type="nvarchar" MaxLength="50" />
+          <Property Name="DescriptionFormation" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Inscription">
+          <Key>
+            <PropertyRef Name="InscriptionID" />
+          </Key>
+          <Property Name="InscriptionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FormationID" Type="int" Nullable="false" />
+          <Property Name="EmployeID" Type="int" Nullable="false" />
+          <Property Name="DateInscription" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Participer">
+          <Key>
+            <PropertyRef Name="InscriptionID" />
+          </Key>
+          <Property Name="InscriptionID" Type="int" Nullable="false" />
+          <Property Name="Mention" Type="nvarchar" MaxLength="10" />
+          <Property Name="Resultat" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK1_Participer_Inscription">
+          <End Role="Inscription" Type="Self.Inscription" Multiplicity="1" />
+          <End Role="Participer" Type="Self.Participer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Inscription">
+              <PropertyRef Name="InscriptionID" />
+            </Principal>
+            <Dependent Role="Participer">
+              <PropertyRef Name="InscriptionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK3_Inscription_Formation">
+          <End Role="Formation" Type="Self.Formation" Multiplicity="1" />
+          <End Role="Inscription" Type="Self.Inscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formation">
+              <PropertyRef Name="FormationID" />
+            </Principal>
+            <Dependent Role="Inscription">
+              <PropertyRef Name="FormationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK4_Inscription_Employe">
+          <End Role="Employe" Type="Self.Employe" Multiplicity="1" />
+          <End Role="Inscription" Type="Self.Inscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employe">
+              <PropertyRef Name="EmployeID" />
+            </Principal>
+            <Dependent Role="Inscription">
+              <PropertyRef Name="EmployeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="data1ModelStoreContainer">
+          <EntitySet Name="Employe" EntityType="Self.Employe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Formation" EntityType="Self.Formation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inscription" EntityType="Self.Inscription" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Participer" EntityType="Self.Participer" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK1_Participer_Inscription" Association="Self.FK1_Participer_Inscription">
+            <End Role="Inscription" EntitySet="Inscription" />
+            <End Role="Participer" EntitySet="Participer" />
+          </AssociationSet>
+          <AssociationSet Name="FK3_Inscription_Formation" Association="Self.FK3_Inscription_Formation">
+            <End Role="Formation" EntitySet="Formation" />
+            <End Role="Inscription" EntitySet="Inscription" />
+          </AssociationSet>
+          <AssociationSet Name="FK4_Inscription_Employe" Association="Self.FK4_Inscription_Employe">
+            <End Role="Employe" EntitySet="Employe" />
+            <End Role="Inscription" EntitySet="Inscription" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="data1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employe">
+          <Key>
+            <PropertyRef Name="EmployeID" />
+          </Key>
+          <Property Name="EmployeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateBirth" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Inscriptions" Relationship="Self.FK4_Inscription_Employe" FromRole="Employe" ToRole="Inscription" />
+        </EntityType>
+        <EntityType Name="Formation">
+          <Key>
+            <PropertyRef Name="FormationID" />
+          </Key>
+          <Property Name="FormationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NomFormation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionFormation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Inscriptions" Relationship="Self.FK3_Inscription_Formation" FromRole="Formation" ToRole="Inscription" />
+        </EntityType>
+        <EntityType Name="Inscription">
+          <Key>
+            <PropertyRef Name="InscriptionID" />
+          </Key>
+          <Property Name="InscriptionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormationID" Type="Int32" Nullable="false" />
+          <Property Name="EmployeID" Type="Int32" Nullable="false" />
+          <Property Name="DateInscription" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Employe" Relationship="Self.FK4_Inscription_Employe" FromRole="Inscription" ToRole="Employe" />
+          <NavigationProperty Name="Formation" Relationship="Self.FK3_Inscription_Formation" FromRole="Inscription" ToRole="Formation" />
+          <NavigationProperty Name="Participer" Relationship="Self.FK1_Participer_Inscription" FromRole="Inscription" ToRole="Participer" />
+        </EntityType>
+        <EntityType Name="Participer">
+          <Key>
+            <PropertyRef Name="InscriptionID" />
+          </Key>
+          <Property Name="InscriptionID" Type="Int32" Nullable="false" />
+          <Property Name="Mention" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Resultat" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Inscription" Relationship="Self.FK1_Participer_Inscription" FromRole="Participer" ToRole="Inscription" />
+        </EntityType>
+        <Association Name="FK4_Inscription_Employe">
+          <End Role="Employe" Type="Self.Employe" Multiplicity="1" />
+          <End Role="Inscription" Type="Self.Inscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employe">
+              <PropertyRef Name="EmployeID" />
+            </Principal>
+            <Dependent Role="Inscription">
+              <PropertyRef Name="EmployeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK3_Inscription_Formation">
+          <End Role="Formation" Type="Self.Formation" Multiplicity="1" />
+          <End Role="Inscription" Type="Self.Inscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formation">
+              <PropertyRef Name="FormationID" />
+            </Principal>
+            <Dependent Role="Inscription">
+              <PropertyRef Name="FormationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK1_Participer_Inscription">
+          <End Role="Inscription" Type="Self.Inscription" Multiplicity="1" />
+          <End Role="Participer" Type="Self.Participer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Inscription">
+              <PropertyRef Name="InscriptionID" />
+            </Principal>
+            <Dependent Role="Participer">
+              <PropertyRef Name="InscriptionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="data1Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employes" EntityType="Self.Employe" />
+          <EntitySet Name="Formations" EntityType="Self.Formation" />
+          <EntitySet Name="Inscriptions" EntityType="Self.Inscription" />
+          <EntitySet Name="Participers" EntityType="Self.Participer" />
+          <AssociationSet Name="FK4_Inscription_Employe" Association="Self.FK4_Inscription_Employe">
+            <End Role="Employe" EntitySet="Employes" />
+            <End Role="Inscription" EntitySet="Inscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK3_Inscription_Formation" Association="Self.FK3_Inscription_Formation">
+            <End Role="Formation" EntitySet="Formations" />
+            <End Role="Inscription" EntitySet="Inscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK1_Participer_Inscription" Association="Self.FK1_Participer_Inscription">
+            <End Role="Inscription" EntitySet="Inscriptions" />
+            <End Role="Participer" EntitySet="Participers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="data1ModelStoreContainer" CdmEntityContainer="data1Entities1">
+          <EntitySetMapping Name="Employes">
+            <EntityTypeMapping TypeName="data1Model.Employe">
+              <MappingFragment StoreEntitySet="Employe">
+                <ScalarProperty Name="EmployeID" ColumnName="EmployeID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="DateBirth" ColumnName="DateBirth" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Formations">
+            <EntityTypeMapping TypeName="data1Model.Formation">
+              <MappingFragment StoreEntitySet="Formation">
+                <ScalarProperty Name="FormationID" ColumnName="FormationID" />
+                <ScalarProperty Name="NomFormation" ColumnName="NomFormation" />
+                <ScalarProperty Name="DescriptionFormation" ColumnName="DescriptionFormation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inscriptions">
+            <EntityTypeMapping TypeName="data1Model.Inscription">
+              <MappingFragment StoreEntitySet="Inscription">
+                <ScalarProperty Name="InscriptionID" ColumnName="InscriptionID" />
+                <ScalarProperty Name="FormationID" ColumnName="FormationID" />
+                <ScalarProperty Name="EmployeID" ColumnName="EmployeID" />
+                <ScalarProperty Name="DateInscription" ColumnName="DateInscription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Participers">
+            <EntityTypeMapping TypeName="data1Model.Participer">
+              <MappingFragment StoreEntitySet="Participer">
+                <ScalarProperty Name="InscriptionID" ColumnName="InscriptionID" />
+                <ScalarProperty Name="Mention" ColumnName="Mention" />
+                <ScalarProperty Name="Resultat" ColumnName="Resultat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

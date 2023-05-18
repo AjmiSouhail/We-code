@@ -1,0 +1,50 @@
+﻿@model IEnumerable<We_code.Models.Participer>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+<div>
+
+    <h1 style="color: #153462; ">Resultat Participations </h1>
+    <div style="background-color:ghostwhite">
+        <table class="table">
+            <tr>
+                <th style="color: #47B5FF; ">
+                    Inscription ID
+                </th>
+                <th style="color: #47B5FF; ">
+                    Resultat
+                </th>
+                <th style="color: #47B5FF; ">
+                    Mention
+                </th>
+                <th style="color: #47B5FF; ">Modification</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Inscription.InscriptionID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Resultat)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mention)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.InscriptionID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.InscriptionID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.InscriptionID })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div><button class="btn btn-default">
+        @Html.ActionLink("Note Participation", "Create")
+    </button>
+

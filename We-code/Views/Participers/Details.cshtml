@@ -1,0 +1,42 @@
+﻿@model We_code.Models.Participer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Participer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Mention)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mention)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Resultat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Resultat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Inscription.InscriptionID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Inscription.InscriptionID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.InscriptionID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

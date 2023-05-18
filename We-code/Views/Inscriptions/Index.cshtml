@@ -1,0 +1,46 @@
+﻿@model IEnumerable<We_code.Models.Inscription>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1 style="color: #153462; ">Les Inscriptions</h1>
+<table class="table" style="background-color:ghostwhite">
+    <tr>
+        <th style="color: #47B5FF; ">
+            Nom Employe
+        </th>
+        <th style="color: #47B5FF; ">
+            Nom Formation
+        </th>
+        <th style="color: #47B5FF; ">
+            Date Inscription
+        </th>
+        <th style="color: #47B5FF; ">Modification</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employe.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Formation.NomFormation)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateInscription)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.InscriptionID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.InscriptionID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.InscriptionID })
+            </td>
+        </tr>
+    }
+
+</table>
+<button class="btn btn-default">
+    @Html.ActionLink("Nauveau Inscription", "Create")
+</button>
